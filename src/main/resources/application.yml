@@ -1,0 +1,31 @@
+logging:
+  config: ${LOGGING_CONFIG:classpath:logback-spring.xml}
+
+server:
+  port: ${SERVER_PORT:8080}
+  shutdown: graceful
+  servlet.session.timeout: 24h
+
+spring:
+  jackson:
+    property-naming-strategy: SNAKE_CASE
+    deserialization:
+      fail-on-unknown-properties: false
+
+  jpa:
+    show-sql: false
+    open-in-view: false
+    hibernate:
+      ddl-auto: update
+      format_sql: true
+  datasource:
+    url: ${POSTGRES_URL:jdbc:postgresql://localhost:5432/testexample}
+    username: ${POSTGRES_USERNAME:postgres}
+    password: ${POSTGRES_PASSWORD:postgres}
+  thymeleaf:
+    mode: HTML
+    cache: false
+    prefix: file:////home/skorpion/1.Soft/1.projects/4.funbox/2.projects/dmp-triggers-admin/dmp-triggers-admin/src/main/resources/templates/
+  mvc:
+    static-path-pattern: /static/**
+
