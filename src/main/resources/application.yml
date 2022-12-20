@@ -16,7 +16,9 @@ spring:
     show-sql: false
     open-in-view: false
     hibernate:
+#   "update" - create database, only for pet projects
       ddl-auto: update
+#      ddl-auto: validate
       format_sql: true
   datasource:
     url: ${POSTGRES_URL:jdbc:postgresql://localhost:5432/testexample}
@@ -29,3 +31,5 @@ spring:
   mvc:
     static-path-pattern: /static/**
 
+#logging:
+#    config: classpath:logback-custom.xml

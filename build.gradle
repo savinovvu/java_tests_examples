@@ -35,3 +35,16 @@ tasks.named('test') {
 }
 
 
+sourceSets {
+    integration {
+        compileClasspath += sourceSets.test.runtimeClasspath
+        runtimeClasspath += sourceSets.test.runtimeClasspath
+    }
+}
+
+task integration(type: Test) {
+    testClassesDirs = sourceSets.integration.output.classesDirs
+    classpath = sourceSets.integration.runtimeClasspath
+
+    testLogging.showStandardStreams = true
+}
