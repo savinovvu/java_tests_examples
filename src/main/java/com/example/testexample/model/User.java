@@ -1,10 +1,9 @@
 package com.example.testexample.model;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
 import lombok.experimental.Accessors;
 import lombok.experimental.FieldNameConstants;
+import org.springframework.data.domain.Persistable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,12 +15,10 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "users")
-@Getter
-@Setter
 @Accessors(chain = true)
-@NoArgsConstructor
+@Data
 @FieldNameConstants
-public class User {
+public class User implements Persistable<Integer> {
 
     @Id
     @SequenceGenerator(name = "users_seq", sequenceName = "users_seq", allocationSize = 1, initialValue = 1000)
@@ -34,4 +31,8 @@ public class User {
     @Column(name = "last_name")
     private String lastName;
 
+    @Override
+    public boolean isNew() {
+        return getId() == null;
+    }
 }

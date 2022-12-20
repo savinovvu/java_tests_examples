@@ -48,3 +48,7 @@ task integration(type: Test) {
 
     testLogging.showStandardStreams = true
 }
+
+tasks.named('integration') {
+    useJUnitPlatform()
+}
