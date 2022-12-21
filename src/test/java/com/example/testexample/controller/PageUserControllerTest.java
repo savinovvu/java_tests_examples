@@ -16,19 +16,19 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Arrays;
+import java.util.List;
 
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 @ExtendWith(SpringExtension.class)
-@WebMvcTest(UserRestController.class)
-class UserControllerTest {
-
+@WebMvcTest(PageUserController.class)
+class PageUserControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
@@ -46,61 +46,24 @@ class UserControllerTest {
     public void contextLoads() {
         Assertions.assertThat(mockMvc).isNotNull();
     }
-
     @Test
     @WithMockUser(authorities = Authority.EDIT_USER)
-    public void allUsersPermit() throws Exception {
+    public void testModel() throws Exception {
         int id1 = 1;
         int id2 = 2;
-        given(userService.findAll()).willReturn(Arrays.asList(new User().setId(id1), new User().setId(id2)));
+        List<User> users = Arrays.asList(new User().setId(id1), new User().setId(id2));
+        given(userService.findAll()).willReturn(users);
 
 
         mockMvc
-                .perform(get("/api/users"))
+                .perform(get("/web/users"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.length()").value(2))
-                .andExpect(jsonPath("$[0].id").value("1"))
-                .andExpect(jsonPath("$[1].id").value("2"));
+                .andExpect(view().name("/pages/user/index"))
+                .andExpect(model().attribute("list", users));
 
         verify(userService).findAll();
         verifyNoMoreInteractions(userService);
     }
 
-
-    @Test
-    public void allUsersDeny() throws Exception {
-        mockMvc
-                .perform(get("/api/users"))
-                .andExpect(status().isForbidden());
-
-        verifyNoMoreInteractions(userService);
-    }
-
-    @Test
-    @WithMockUser(authorities = Authority.EDIT_USER)
-    public void findByIdPermit() throws Exception {
-        int id = 1;
-        given(userService.findById(id)).willReturn(new User().setId(id));
-
-
-        mockMvc
-                .perform(get("/api/users/1"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(1));
-
-        verify(userService).findById(id);
-        verifyNoMoreInteractions(userService);
-    }
-
-    @Test
-    public void checker() throws Exception {
-        mockMvc
-                .perform(get("/api/checker"))
-                .andExpect(status().isOk());
-
-
-        verifyNoInteractions(userService);
-        verifyNoMoreInteractions(userService);
-    }
 
 }

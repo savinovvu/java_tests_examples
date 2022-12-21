@@ -17,4 +17,4 @@
 
 
 TODO:
- написать тесты для логов, валидации, exception handler, thymeleaf html страницы 
+ написать тесты для логов, валидации, exception handler,

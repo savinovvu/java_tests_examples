@@ -11,7 +11,7 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-public class ControllerWithValiation {
+public class PageUserController {
 
     private final UserService userService;
 
