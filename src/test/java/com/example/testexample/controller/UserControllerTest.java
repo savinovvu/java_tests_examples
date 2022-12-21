@@ -1,12 +1,16 @@
 package com.example.testexample.controller;
 
+import com.example.testexample.model.Authority;
 import com.example.testexample.model.User;
+import com.example.testexample.security.SecurityService;
 import com.example.testexample.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -21,7 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
-@WebMvcTest(UserController.class)
+@WebMvcTest(UserRestController.class)
 class UserControllerTest {
 
     @Autowired
@@ -30,18 +34,23 @@ class UserControllerTest {
     @MockBean
     private UserService userService;
 
+    @MockBean
+    private SecurityService _0;
+
+    @MockBean
+    private BCryptPasswordEncoder _1;
+
 
     @Test
-//    if you use spring security
-//    @WithMockUser
-    public void allUsers() throws Exception {
+    @WithMockUser(authorities = Authority.EDIT_USER)
+    public void allUsersPermit() throws Exception {
         int id1 = 1;
         int id2 = 2;
         given(userService.findAll()).willReturn(Arrays.asList(new User().setId(id1), new User().setId(id2)));
 
 
         mockMvc
-                .perform(get("/users"))
+                .perform(get("/api/users"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(2))
                 .andExpect(jsonPath("$[0].id").value("1"))
@@ -51,14 +60,25 @@ class UserControllerTest {
         verifyNoMoreInteractions(userService);
     }
 
+
     @Test
-    public void findById() throws Exception {
+    public void allUsersDeny() throws Exception {
+        mockMvc
+                .perform(get("/api/users"))
+                .andExpect(status().isForbidden());
+
+        verifyNoMoreInteractions(userService);
+    }
+
+    @Test
+    @WithMockUser(authorities = Authority.EDIT_USER)
+    public void findByIdPermit() throws Exception {
         int id = 1;
         given(userService.findById(id)).willReturn(new User().setId(id));
 
 
         mockMvc
-                .perform(get("/users/1"))
+                .perform(get("/api/users/1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1));
 
@@ -69,7 +89,7 @@ class UserControllerTest {
     @Test
     public void checker() throws Exception {
         mockMvc
-                .perform(get("/checker"))
+                .perform(get("/api/checker"))
                 .andExpect(status().isOk());
 
 

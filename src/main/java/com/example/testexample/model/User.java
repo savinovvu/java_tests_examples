@@ -31,6 +31,9 @@ public class User implements Persistable<Integer> {
     @Column(name = "last_name")
     private String lastName;
 
+    @Column(name = "role")
+    private Role role;
+
     @Override
     public boolean isNew() {
         return getId() == null;

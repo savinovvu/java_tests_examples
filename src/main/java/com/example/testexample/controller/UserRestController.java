@@ -11,23 +11,23 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-public class UserController {
+public class UserRestController {
 
     private final UserService userService;
 
 
-    @GetMapping("/users")
+    @GetMapping("/api/users")
     public List<User> allUsers() {
         return userService.findAll();
     }
 
 
-    @GetMapping("/users/{id}")
+    @GetMapping("/api/users/{id}")
     public User allUsers(@PathVariable("id") Integer id) {
         return userService.findById(id);
     }
 
-    @GetMapping("/checker")
+    @GetMapping("/api/checker")
     public String checker() {
         return "ok";
     }

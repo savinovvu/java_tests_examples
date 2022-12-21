@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<body>
+<nav class="navbar navbar-expand-md navbar-light fixed-top bg-light" th:fragment="header">
+    <div class="collapse navbar-collapse">
+        <ul class="navbar-nav mr-auto"
+            sec:authorize="isAuthenticated()">
+            <li th:with="link='/web/users'" class="nav-item">
+                <a class="nav-link"
+                   th:classappend="${#request.requestURI.equals(link) ? 'active':''}"
+                   sec:authorize="hasAuthority('EDIT_USER')"
+                   th:href="${link}">Secure User page</a>
+            </li>
+
+            <li th:with="link='/web/common'" class="nav-item">
+                <a class="nav-link"
+                   th:classappend="${#request.requestURI.equals(link) ? 'active':''}"
+                   sec:authorize="hasAuthority('EDIT_USER')"
+                   th:href="${link}">Common Page</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<h1>this is SECURE USER page</h1>
+
+
+
+</body>
+</html>
