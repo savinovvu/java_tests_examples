@@ -50,7 +50,7 @@ class UserControllerTest {
 
 
         mockMvc
-                .perform(get("/api/users"))
+                .perform(get("/api/v1/users"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(2))
                 .andExpect(jsonPath("$[0].id").value("1"))
@@ -64,7 +64,7 @@ class UserControllerTest {
     @Test
     public void allUsersDeny() throws Exception {
         mockMvc
-                .perform(get("/api/users"))
+                .perform(get("/api/v1/users"))
                 .andExpect(status().isForbidden());
 
         verifyNoMoreInteractions(userService);
@@ -78,7 +78,7 @@ class UserControllerTest {
 
 
         mockMvc
-                .perform(get("/api/users/1"))
+                .perform(get("/api/v1/users/1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1));
 

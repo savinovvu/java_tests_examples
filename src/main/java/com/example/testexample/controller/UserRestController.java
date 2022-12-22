@@ -16,13 +16,13 @@ public class UserRestController {
     private final UserService userService;
 
 
-    @GetMapping("/api/users")
+    @GetMapping("/api/v1/users")
     public List<User> allUsers() {
         return userService.findAll();
     }
 
 
-    @GetMapping("/api/users/{id}")
+    @GetMapping("/api/v1/users/{id}")
     public User allUsers(@PathVariable("id") Integer id) {
         return userService.findById(id);
     }
