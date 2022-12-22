@@ -21,7 +21,7 @@ spring:
 #      ddl-auto: validate
       format_sql: true
   datasource:
-    url: ${POSTGRES_URL:jdbc:postgresql://localhost:5432/postgres}
+    url: ${POSTGRES_URL:jdbc:postgresql://localhost:5432/testexample_test}
     username: ${POSTGRES_USERNAME:postgres}
     password: ${POSTGRES_PASSWORD:postgres}
   thymeleaf:
