@@ -1,3 +1,6 @@
+application-custom.yml
+application-test-custom.yml
+
 HELP.md
 .gradle
 build/
