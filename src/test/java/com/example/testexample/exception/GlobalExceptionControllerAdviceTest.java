@@ -9,7 +9,7 @@ class GlobalExceptionControllerAdviceTest {
     public void check_valid(RegExpTask task, String message) {
         for (String v : task.getAnswers()) {
             RegExpTaskResulter check = subject.check(TaskCondition.of(task, v));
-            assertTrue(check.getSuccess(), message + ", answer: " + v);
+            Assertions.assertThat(check.getSuccess(), message + ", answer: " + v);
         }
     }
 
