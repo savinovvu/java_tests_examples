@@ -48,7 +48,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .antMatchers("/web/users/**")
                 .hasAuthority(Role.ADMIN.getAuthority())
-                .antMatchers("/api/users/**")
+                .antMatchers("/api/v1/users/**")
                 .hasAuthority(Role.ADMIN.getAuthority())
 //                .antMatchers("/web/groups")
 //                .hasAuthority(Role.ADMIN.getAuthority())
