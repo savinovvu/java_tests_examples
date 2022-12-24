@@ -1,10 +1,5 @@
 package com.example.testexample.model;
 
-import lombok.Data;
-import lombok.experimental.Accessors;
-import lombok.experimental.FieldNameConstants;
-import org.springframework.data.domain.Persistable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,6 +7,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import lombok.Data;
+import lombok.experimental.Accessors;
+import lombok.experimental.FieldNameConstants;
+import org.springframework.data.domain.Persistable;
+
 
 @Entity
 @Table(name = "users")
@@ -20,22 +20,22 @@ import javax.persistence.Table;
 @FieldNameConstants
 public class User implements Persistable<Integer> {
 
-    @Id
-    @SequenceGenerator(name = "users_seq", sequenceName = "users_seq", allocationSize = 1, initialValue = 1000)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "users_seq")
-    private Integer id;
+  @Id
+  @SequenceGenerator(name = "users_seq", sequenceName = "users_seq", allocationSize = 1, initialValue = 1000)
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "users_seq")
+  private Integer id;
 
-    @Column(name = "first_name")
-    private String firstName;
+  @Column(name = "first_name")
+  private String firstName;
 
-    @Column(name = "last_name")
-    private String lastName;
+  @Column(name = "last_name")
+  private String lastName;
 
-    @Column(name = "role")
-    private Role role;
+  @Column(name = "role")
+  private Role role;
 
-    @Override
-    public boolean isNew() {
-        return getId() == null;
-    }
+  @Override
+  public boolean isNew() {
+    return getId() == null;
+  }
 }

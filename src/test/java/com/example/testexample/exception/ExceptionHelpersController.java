@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class ExceptionHelpersController {
 
-    @GetMapping("/web/exception/execute")
-    public ResponseEntity<String> doSomething() {
-        return ResponseEntity.ok("ok");
-    }
+  @GetMapping("/web/exception/execute")
+  public ResponseEntity<String> doSomething() {
+    return ResponseEntity.ok("ok");
+  }
 }
