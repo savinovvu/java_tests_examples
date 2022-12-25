@@ -2,11 +2,16 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '2.7.6'
     id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+    id 'checkstyle'
+    id("org.openrewrite.rewrite") version("5.33.2")
 }
 
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '1.8'
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
 
 configurations {
     compileOnly {
@@ -60,4 +65,21 @@ task integration(type: Test) {
 
 tasks.named('integration') {
     useJUnitPlatform()
+}
+
+
+checkstyle {
+    configFile = rootProject.file('config/checkstyle/checkstyle.xml')
+    ignoreFailures = false
+    maxWarnings = 0
+    maxErrors = 0
+}
+
+checkstyleMain.enabled = true
+checkstyleTest.enabled = true
+checkstyleIntegration.enabled = true
+
+rewrite {
+    activeRecipe("org.openrewrite.java.cleanup.Cleanup")
+    checkstyleConfigFile = rootProject.file('config/checkstyle/checkstyle.xml')
 }

@@ -21,39 +21,38 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
-    private final SecurityService securityService;
-    private final BCryptPasswordEncoder passwordEncoder;
+  private final SecurityService securityService;
+  private final BCryptPasswordEncoder passwordEncoder;
 
 
+  @Override
+  protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    auth
+        .userDetailsService(securityService)
+        .passwordEncoder(passwordEncoder);
+  }
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-                .userDetailsService(securityService)
-                .passwordEncoder(passwordEncoder);
-    }
 
+  @Override
+  protected void configure(HttpSecurity http) throws Exception {
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-
-        http.authorizeRequests()
-                .antMatchers(
-                        "/",
-                        "/web",
-                        "/web/",
-                        "/web/common",
-                        "/api/checker"
-                )
-                .permitAll()
-                .antMatchers("/web/users/**")
-                .hasAuthority(Role.ADMIN.getAuthority())
-                .antMatchers("/api/v1/users/**")
-                .hasAuthority(Role.ADMIN.getAuthority())
+    http.authorizeRequests()
+        .antMatchers(
+            "/",
+            "/web",
+            "/web/",
+            "/web/common",
+            "/api/checker"
+        )
+        .permitAll()
+        .antMatchers("/web/users/**")
+        .hasAuthority(Role.ADMIN.getAuthority())
+        .antMatchers("/api/v1/users/**")
+        .hasAuthority(Role.ADMIN.getAuthority())
 //                .antMatchers("/web/groups")
 //                .hasAuthority(Role.ADMIN.getAuthority())
-                .antMatchers("/web/**")
-                .authenticated()
+        .antMatchers("/web/**")
+        .authenticated()
 //                .and()
 //                TODO: NOT IMPLEMENTED YET
 //                .formLogin()
@@ -65,33 +64,33 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .logout()
 //                .logoutRequestMatcher(new AntPathRequestMatcher("/web/signout", "GET"))
 //                .permitAll()
-                .and()
-                .exceptionHandling();
-    }
+        .and()
+        .exceptionHandling();
+  }
 
 
-    @Override
-    public void configure(WebSecurity web) {
+  @Override
+  public void configure(WebSecurity web) {
 //        TODO: ADD Static content, fix favicon request
-        web.ignoring()
-                .antMatchers(
-                        "/static/**",
-                        "/webjars/**",
-                        "/css/**",
-                        "/js/**",
-                        "/images/**",
-                        "/error/**",
-                        "/web/error/**",
-                        "/favicon.ico"
-                );
-    }
+    web.ignoring()
+        .antMatchers(
+            "/static/**",
+            "/webjars/**",
+            "/css/**",
+            "/js/**",
+            "/images/**",
+            "/error/**",
+            "/web/error/**",
+            "/favicon.ico"
+        );
+  }
 
 
-    @Bean
-    @Override
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
-    }
+  @Bean
+  @Override
+  public AuthenticationManager authenticationManagerBean() throws Exception {
+    return super.authenticationManagerBean();
+  }
 
 
 }

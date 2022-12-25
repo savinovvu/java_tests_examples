@@ -9,12 +9,13 @@ import org.springframework.stereotype.Service;
 // TODO: IMPLEMENT IT WITH USERSERVICE AND DATABASE
 @Service
 public class SecurityService implements UserDetailsService {
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+
+  @Override
+  public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 //        if (nonNull(username)) {
 //            return new User("name", "pass", Arrays.asList(Role.USER));
 //        } else {
 //        }
-            return null;
-    }
+    return null;
+  }
 }

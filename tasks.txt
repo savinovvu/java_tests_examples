@@ -1,0 +1,8 @@
+2. add asdf
+1. add spring security
+
+
+-------
+2. add jacoco
+2. tests examples for logs, validation, exception handler,
+1. add integration to ci
