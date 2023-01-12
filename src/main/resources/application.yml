@@ -27,7 +27,8 @@ spring:
   thymeleaf:
     mode: HTML
     cache: false
-#    prefix: file:////home/skorpion/1.Soft/1.projects/2.myprojects/testexample/anyproj/src/main/resources/templates/
+#    only for dev
+#    prefix: file:src/main/resources/templates/
   mvc:
     static-path-pattern: /static/**
 
